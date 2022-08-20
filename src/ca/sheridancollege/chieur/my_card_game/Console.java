@@ -3,13 +3,23 @@
  *
  * @author Ricky Chieu
  */
-package ca.sheridancollege.chieur.playing_cards_game;
+package ca.sheridancollege.chieur.my_card_game;
 
 import ca.sheridancollege.chieur.standard_playing_cards.Card;
 import java.util.*;
 
 public class Console implements SynchronousUi {
 	Scanner scanner = new Scanner(System.in);
+
+	static private Console singleton=null;
+
+	private Console() {}
+
+	static Console getSingleton() {
+		if (singleton == null)
+			singleton = new Console();
+		return singleton;
+	}
 
 	@Override
 	public void announceInvalidInputMessage(Throwable throwable) {
@@ -67,8 +77,16 @@ public class Console implements SynchronousUi {
 	}
 
 	@Override
+	public void announceAttackingCards(Map<Card, Player> cardPlayerMap) {
+		System.out.println("attacking cards :");
+		for (Map.Entry cardPlayer : cardPlayerMap.entrySet()) {
+			System.out.println(cardPlayer.getKey() + " from " + cardPlayer.getValue());
+		}
+	}
+
+	@Override
 	public void announceDominantCardPlayerPair(CardPlayerPair cardPlayerPair, Card centralCard) {
-		System.out.println("\ndominant card : " + cardPlayerPair.card + "\ncentral card " + centralCard + " awarded to " + cardPlayerPair.player);
+		System.out.println("\ndominant card : " + cardPlayerPair.CARD + "\ncentral card " + centralCard + " awarded to " + cardPlayerPair.PLAYER);
 	}
 
 	@Override

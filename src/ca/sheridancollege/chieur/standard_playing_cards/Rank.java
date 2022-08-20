@@ -32,7 +32,7 @@ public enum Rank {
 		return currentGreatestRank;
 	}
 
-	int getMagnitude() {
+	private int getMagnitude() {
 		return ordinal() + 1;
 	}
 

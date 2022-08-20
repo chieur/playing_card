@@ -1,21 +1,31 @@
 /**
- * 2022-07-28
+ * 2022-08-09
  *
  * @author Ricky Chieu
  */
-package ca.sheridancollege.chieur.playing_cards_game;
+package ca.sheridancollege.chieur.my_card_game;
 
 import ca.sheridancollege.chieur.standard_playing_cards.Card;
 import java.util.*;
 
-interface UiController {
-	int promptPlayerAmount(int min, int max);
+public interface SynchronousUi {
+	void announceInvalidInputMessage(Throwable throwable);
+
+	void announcePlayerAmountPrompt(int min, int max);
+
+	int requestPlayerAmount();
 
 	void announceRoundIteration(int iteration);
 
 	void announceRevealedCentralCard(Card card);
 
-	Map<Card, Player> promptCardPlayerMap(Set<Player> players);
+	void announceCardPrompt(Player player);
+
+	int requestCardEnumeration();
+
+	void announceChosenCard(Card card);
+
+	void announceAttackingCards(Map<Card, Player> cardPlayerMap);
 
 	void announceDominantCardPlayerPair(CardPlayerPair cardPlayerPair, Card centralCard);
 

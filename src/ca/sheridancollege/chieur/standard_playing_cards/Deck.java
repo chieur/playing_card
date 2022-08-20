@@ -5,19 +5,22 @@
  */
 package ca.sheridancollege.chieur.standard_playing_cards;
 
-import ca.sheridancollege.chieur.playing_cards.group_card;
 import java.util.*;
 
-public class Deck {
-	static public Set<Card> getCards() {
-		Set<Card> cards = new HashSet();
+public class Deck extends ca.sheridancollege.chieur.cards.Deck{
+	static public Set<Card> getAllCards() {
+		if (allCards == null) {
+			Set<Card> cards = new HashSet();
 
-		for (Suit suit : Suit.values()) {
-			for (Rank rank : Rank.values()) {
-				cards.add(new Card(suit, rank));
+			for (Suit suit : Suit.values()) {
+				for (Rank rank : Rank.values()) {
+					cards.add(new Card(suit, rank));
+				}
 			}
+
+			allCards = cards;
 		}
 
-		return cards;
+		return (Set<Card>) allCards;
 	}
 }

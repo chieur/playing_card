@@ -7,12 +7,26 @@ package ca.sheridancollege.chieur.standard_playing_cards;
 
 import java.util.*;
 
-public class Card extends ca.sheridancollege.chieur.playing_cards.Card {
+public class Card extends ca.sheridancollege.chieur.cards.Card {
+
+	public final Suit SUIT;
+	public final Rank RANK;
+
+	Card(Suit suit, Rank rank) {
+		this.SUIT = suit;
+		this.RANK = rank;
+	}
+
+	@Override
+	public String toString() {
+		return "" + SUIT.getCharacter(true) + RANK.getAlphanumeric();
+	}
+
 	static public Set<Card> getGreatestRankCard(Set<Card> cards) {
 		Set<Rank> ranks = new HashSet();
 
 		for (Card currentCard : cards) {
-			ranks.add(currentCard.rank);
+			ranks.add(currentCard.RANK);
 		}
 
 		Rank greatestRank = Rank.getGreatestRank(ranks);
@@ -20,24 +34,11 @@ public class Card extends ca.sheridancollege.chieur.playing_cards.Card {
 		Set<Card> greatestRankCards = new HashSet();
 
 		for (Card currentCard : cards) {
-			if (currentCard.rank == greatestRank) {
+			if (currentCard.RANK == greatestRank) {
 				greatestRankCards.add(currentCard);
 			}
 		}
 
 		return greatestRankCards;
-	}
-
-	public final Suit suit;
-	public final Rank rank;
-
-	Card(Suit suit, Rank rank) {
-		this.suit = suit;
-		this.rank = rank;
-	}
-
-	@Override
-	public String toString() {
-		return "" + suit.getCharacter(true) + rank.getAlphanumeric();
 	}
 }

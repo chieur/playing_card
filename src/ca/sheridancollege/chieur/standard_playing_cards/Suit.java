@@ -11,17 +11,17 @@ public enum Suit {
 	CLUB(3, true),
 	DIAMOND(2, false);
 
-	final int unicodeOffset;
-	final boolean isUnicodeShapeFillingUninverted;
+	final int UNICODE_OFFSET;
+	final boolean IS_UNICODE_SHAPE_FILLING_UNINVERTED;
 
 	Suit(int unicodeOffset, boolean isUnicodeShapeFillingUninverted) {
-		this.unicodeOffset = unicodeOffset;
-		this.isUnicodeShapeFillingUninverted = isUnicodeShapeFillingUninverted;
+		this.UNICODE_OFFSET = unicodeOffset;
+		this.IS_UNICODE_SHAPE_FILLING_UNINVERTED = isUnicodeShapeFillingUninverted;
 	}
 
 	char getCharacter(boolean isFilledShape) {
-		int codepoint = 9824 + unicodeOffset;
-		if (isFilledShape != isUnicodeShapeFillingUninverted) {
+		int codepoint = 9824 + UNICODE_OFFSET;
+		if (isFilledShape != IS_UNICODE_SHAPE_FILLING_UNINVERTED) {
 			codepoint += 4;
 		}
 		return (char) codepoint;

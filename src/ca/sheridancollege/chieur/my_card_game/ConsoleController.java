@@ -3,15 +3,25 @@
  *
  * @author Ricky Chieu
  */
-package ca.sheridancollege.chieur.playing_cards_game;
+package ca.sheridancollege.chieur.my_card_game;
 
 import ca.sheridancollege.chieur.standard_playing_cards.Card;
-import ca.sheridancollege.chieur.playing_cards.Manager;
+import ca.sheridancollege.chieur.cards.DeckManager;
 import java.util.*;
 
 public class ConsoleController implements UiController {
 	Scanner scanner = new Scanner(System.in);
-	SynchronousUi synchronousUi = new Console();// make singleton
+	SynchronousUi synchronousUi = Console.getSingleton();
+
+	static private ConsoleController singleton=null;
+
+	private ConsoleController() {}
+
+	static ConsoleController getSingleton() {
+		if (singleton == null)
+			singleton = new ConsoleController();
+		return singleton;
+	}
 
 	@Override
 	public int promptPlayerAmount(int min, int max) {
@@ -42,7 +52,7 @@ public class ConsoleController implements UiController {
 		Card card;
 		for (;;) {
 			try {
-				card = Manager.takeCard(player.deck, synchronousUi.requestCardEnumeration());
+				card = DeckManager.takeCard(player.deck, synchronousUi.requestCardEnumeration());
 				break;
 			} catch (IndexOutOfBoundsException exception) {
 				synchronousUi.announceInvalidInputMessage(new Exception("invalid input: the enumeration of the card must be but isn't existant"));
@@ -54,16 +64,17 @@ public class ConsoleController implements UiController {
 
 	@Override
 	public Map<Card, Player> promptCardPlayerMap(Set<Player> players) {
-		HashMap<Card, Player> CardPlayerMap = new HashMap();
+		HashMap<Card, Player> cardPlayerMap = new HashMap();
 		for (Player player : players) {
-			CardPlayerMap.put(promptCard(player), player);// link the player with its card
+			cardPlayerMap.put(promptCard(player), player);// link the player with its card
 		}
-		return CardPlayerMap;
+		synchronousUi.announceAttackingCards(cardPlayerMap);
+		return cardPlayerMap;
 	}
 
 	@Override
-	public void announceDominantCardPlayerPair(CardPlayerPair CardPlayerPair, Card centralCard) {
-		synchronousUi.announceDominantCardPlayerPair(CardPlayerPair, centralCard);
+	public void announceDominantCardPlayerPair(CardPlayerPair cardPlayerPair, Card centralCard) {
+		synchronousUi.announceDominantCardPlayerPair(cardPlayerPair, centralCard);
 	}
 
 	@Override
